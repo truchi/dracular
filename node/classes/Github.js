@@ -7,6 +7,16 @@ class Github {
     this.repo  = repo
   }
 
+  async getREADME() {
+    const URL =
+      `https://api.github.com/repos/${ this.owner }/${ this.repo }/readme`
+
+    const response = await axios.get(URL)
+    const content  = Buffer.from(response.data.content, 'base64').toString()
+
+    return content
+  }
+
   async getZipBall() {
     const apiURL =
       `https://api.github.com/repos/${ this.owner }/${ this.repo }/releases/latest`
@@ -20,7 +30,7 @@ class Github {
   }
 
   static authenticate(token) {
-    octokit.authenticate({ type : 'token', token: token })
+    octokit.authenticate({ type: 'token', token: token })
 
     return Github
   }
