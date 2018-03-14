@@ -1,35 +1,34 @@
 const octokit = require('@octokit/rest')()
+const axios   = require('axios')
 
 class Github {
-  constructor({ token, owner, repo }) {
-    this.token = token
+  constructor({ owner, repo }) {
     this.owner = owner
     this.repo  = repo
-
-    this
-      .authenticate()
-      .printRateLimit()
   }
 
-  authenticate() {
-    octokit.authenticate({
-      type : 'token'
-    , token: this.token
-    })
+  async getZipBall() {
+    const apiURL =
+      `https://api.github.com/repos/${ this.owner }/${ this.repo }/releases/latest`
 
-    return this
+    const apiResponse     = await axios.get(apiURL)
+    const zipBallURL      = apiResponse.data.zipball_url
+    const zipballResponse = await axios
+      .get(zipBallURL, { responseType: 'arraybuffer' })
+
+    return zipballResponse.data
   }
 
-  printRateLimit() {
-    octokit.misc
-      .getRateLimit({})
-      .then(response => {
-        console.log('=== Remaining API calls ===')
-        console.log(`           ${ response.data.rate.remaining }`)
-        console.log('=== === === === === === ===')
-      })
+  static authenticate(token) {
+    octokit.authenticate({ type : 'token', token: token })
 
-    return this
+    return Github
+  }
+
+  static async getRateLimit() {
+    const response = await octokit.misc.getRateLimit({})
+
+    return response.data.rate.remaining
   }
 }
 

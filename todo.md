@@ -6,3 +6,7 @@ All or specific repos
 DL files
 parse & generate template
 generate output
+
+
+https://github.com/dylanaraps/pywal
+https://github.com/yargs/yargs
