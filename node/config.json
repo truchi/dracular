@@ -1,4 +1,4 @@
 {
-  "draculaOwner"    : "dracula"
-, "draculaSuperRepo": "dracula-theme"
+  "draculaOwner": "dracula"
+, "draculaRepo" : "dracula-theme"
 }

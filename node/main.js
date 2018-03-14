@@ -10,21 +10,35 @@ Github
   .authenticate(secret.githubPersonalAccessToken)
   .getRateLimit().then(console.log)
 
-const atom = new Github({
+const dracula = new Github({
   owner: config.draculaOwner
-, repo : 'atom'//config.draculaSuperRepo
+, repo : config.draculaRepo
 })
 
-atom.getZipBall()
-  .then(zipball => {
-    const zip = new Zip(zipball)
-      .remove([
-        '.github/'
-        , 'LICENSE'
-        , 'README.md'
-        , 'package.json'
-      ])
+dracula.getREADME()
+  .then(readme => {
+    const parser = new Parser()
 
-    const files = zip
-      .getFiles()
+    const data = parser.parse(readme)
+    console.log(data);
   })
+
+// const atom = new Github({
+//   owner: config.draculaOwner
+// , repo : 'atom'//config.draculaSuperRepo
+// })
+//
+// atom.getZipBall()
+//   .then(zipball => {
+//     const zip = new Zip(zipball)
+//       .remove([
+//           '.github/'
+//         , 'LICENSE'
+//         , 'README.md'
+//         , 'package.json'
+//         , 'screenshot.png'
+//       ])
+//
+//     const files = zip
+//       .getFiles()
+//   })
