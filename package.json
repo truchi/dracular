@@ -21,6 +21,8 @@
   "dependencies": {
     "@octokit/rest": "^15.2.1",
     "adm-zip": "^0.4.7",
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "color-space": "^1.16.0",
+    "delta-e": "0.0.7"
   }
 }
